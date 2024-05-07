@@ -42,3 +42,8 @@ end
 ylabel('TEB');
 xlabel('SNR (dB)');
 legend('TEB_{min}', 'TEB', 'Location', 'southwest');
+
+%% Q1
+
+chaine_transmission(2, 4, 100, true);
+

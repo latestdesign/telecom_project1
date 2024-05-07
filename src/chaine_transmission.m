@@ -27,7 +27,7 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
     % MAPPING
     bits_regroupes = reshape(bits, n, []);
     entiers = bi2de(bits_regroupes.', 'left-msb');
-    symboles = pskmod(entiers, M).';
+    symboles = pskmod(entiers, M).'; % éventuellement mettre en Gray
     x = kron(symboles, [1 zeros(1, Ns-1)]);
 
     % FILTRE EMISSION
@@ -67,6 +67,15 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
 
     % Affichage graphique
     if visual
-        
+        % signaux générés en quadrature de phase
+        figure;
+        plot(0:Te:(nb_symb*Ns-1)*Te, real(s));
+        hold on;
+        plot(0:Te:(nb_symb*Ns-1)*Te, imag(s));
+        title('Signal généré en quadrature de phase');
+        xlabel('Temps (s)');
+        ylabel('Amplitude');
+        legend('a_k', 'b_k');
+        grid on;
     end
 end
