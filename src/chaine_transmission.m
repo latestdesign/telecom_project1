@@ -67,6 +67,7 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
 
     % Affichage graphique
     if visual
+<<<<<<< HEAD
         % signaux générés en quadrature de phase
         figure;
         plot(0:Te:(nb_symb*Ns-1)*Te, real(s));
@@ -77,5 +78,13 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
         ylabel('Amplitude');
         legend('a_k', 'b_k');
         grid on;
+=======
+        temps = 0:Ts:nb_symb*Ts;
+        figure 
+        plot(temps, s_transp)
+        xlabel('temps (s)')
+        ylabel('Signal')
+        hold on
+>>>>>>> 4f489fd (Q2)
     end
 end
