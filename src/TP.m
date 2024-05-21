@@ -16,7 +16,7 @@ N = 100; % nombre de bits total
 n = 2;
 SNRB = 4;
 pbEquivalent = true;
-[~, s, s_transp, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
+[~, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
 
 %% 1) Signaux générés en quadrature de phase
 figure;
@@ -29,7 +29,7 @@ ylabel('Amplitude');
 legend('a_k', 'b_k');
 grid on;
 
-%% 2) Signal transmis sur fréquence porteuse
+%% 2-2) Signal transmis sur fréquence porteuse
 temps = 0:Te:(nb_symb*Ns-1)*Te;
 figure;
 plot(temps, s_transp);
@@ -37,7 +37,7 @@ xlabel('temps (s)');
 ylabel('Signal');
 hold on;
 
-%% 3) DSP du signal transmis sur fréquence porteuse
+%% 2-3)/3-2) DSP du signal transmis sur fréquence porteuse
 [DSP, F] = pwelch(s_transp, [], [], [], Fe);
 figure;
 plot(F, 10*log10(DSP));
@@ -46,7 +46,29 @@ ylabel('DSP (dB/Hz)');
 title('DSP du signal transmis sur fréquence porteuse');
 grid on;
 
-% 4) Explications
+% 2-4)/3-3) Explications
+
+%% 3-4) Constellations en sortie du mapping et de l'échantilloneur
+% étude des variations en fonction du SNRB
+% symboles (mapping) et s_sample (echantilloneur)
+figure;
+sgtitle('Constellation des symboles');
+subplot(1, 2, 1);
+plot(real(symboles), imag(symboles), 'o');
+title('Sortie du mapping');
+xlabel('Re');
+ylabel('Im');
+axis equal;
+axis tight;
+grid on;
+subplot(1, 2, 2);
+plot(real(s_sample), imag(s_sample), 'o');
+title('Sortie de l''échantilloneur');
+xlabel('Re');
+ylabel('Im');
+axis equal;
+axis tight;
+grid on;
 
 %% 5) et 6) TEB en fonction du SNRB, comparaison à la théorie
 eps = 1e-1; % précision du TEB de 10%
