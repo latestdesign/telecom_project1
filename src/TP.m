@@ -8,14 +8,48 @@ fp = 2000; % fréquence porteuse en Hz
 Te = 1/Fe; % période d'échantillonnage
 Rb = 3000; % débit binaire en bits par seconde
 Tb = 1/Rb; % période par bit
-N = 1000; % nombre de bits total
+N = 100; % nombre de bits total
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Transmission avec transposition de fréquence
-% TOUT A COMMENTER
+%% 2 - Transmission avec transposition de fréquence
+n = 2;
+SNRB = 4;
+pbEquivalent = false;
+[~, s, s_transp, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
 
+%% 2 - 1) Signaux générés en quadrature de phase
+figure;
+plot(0:Te:(nb_symb*Ns-1)*Te, real(s));
+hold on;
+plot(0:Te:(nb_symb*Ns-1)*Te, imag(s));
+title('Signal généré en quadrature de phase');
+xlabel('Temps (s)');
+ylabel('Amplitude');
+legend('a_k', 'b_k');
+grid on;
+
+%% 2 - 2) Signal transmis sur fréquence porteuse
+temps = 0:Te:(nb_symb*Ns-1)*Te;
+figure;
+plot(temps, s_transp);
+xlabel('temps (s)');
+ylabel('Signal');
+hold on;
+
+%% 2 - 3) DSP du signal transmis sur fréquence porteuse
+[DSP, F] = pwelch(s_transp, [], [], [], Fe);
+figure;
+plot(F, 10*log10(DSP));
+xlabel('Fréquence (Hz)');
+ylabel('DSP (dB/Hz)');
+title('DSP du signal transmis sur fréquence porteuse');
+grid on;
+
+% 4) Explications
+
+%% 2 - 5) et 6) TEB en fonction du SNRB, comparaison à la théorie
 eps = 1e-1; % précision du TEB de 10%
-snrb_dB = 0:1:8;
+snrb_dB = 0:1:6;
 
 Q = @(x) 0.5*erfc(x/sqrt(2));
 Nsnr = length(snrb_dB);
@@ -29,7 +63,7 @@ for n=1:4
         TEB_min(i) = 2*((M-1)/(M*n)) * qfunc(sqrt((6*n)/(M^2-1) * snrb(i)));
         N = round(1/(TEB_min(i)*eps^2));
         bits = randi(M, 1, N)*2-M-1;
-        TEB(i) = chaine_transmission(n, snrb(i), N, false);
+        TEB(i) = chaine_transmission(n, snrb(i), N, Fe, fp, Rb, pbEquivalent);
     end
     semilogy(snrb_dB, TEB_min, 'Color', [1 0 0 0.5]);
     hold on;
@@ -43,7 +77,8 @@ ylabel('TEB');
 xlabel('SNR (dB)');
 legend('TEB_{min}', 'TEB', 'Location', 'southwest');
 
-%% Q1
-
-chaine_transmission(2, 4, 100, true);
-
+%% 3 - Chaîne passe-bas équivalente
+n = 2;
+SNRB = 4;
+pbEquivalent = true;
+[~, s, s_transp, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
