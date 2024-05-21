@@ -88,6 +88,18 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
         hold on 
 
         % DSP du signal transmis sur frequence porteuse
-        
+        [DSP, F] = pwelch(s_transp, [], [], [], Fe);
+        figure;
+        plot(F, 10*log10(DSP));
+        xlabel('Fréquence (Hz)');
+        ylabel('DSP (dB/Hz)');
+        title('DSP du signal transmis sur fréquence porteuse');
+        grid on;
+        temps = 0:Ts:nb_symb*Ts;
+        figure;
+        plot(temps, s_transp)
+        xlabel('temps (s)')
+        ylabel('Signal')
+        hold on
     end
 end

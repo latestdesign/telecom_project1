@@ -67,7 +67,6 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
 
     % Affichage graphique
     if visual
-
         % signaux générés en quadrature de phase
         figure;
         plot(0:Te:(nb_symb*Ns-1)*Te, real(s));
@@ -95,11 +94,5 @@ function [TEB] = chaine_transmission(n, SNRB, N, visual)
         ylabel('DSP (dB/Hz)');
         title('DSP du signal transmis sur fréquence porteuse');
         grid on;
-        temps = 0:Ts:nb_symb*Ts;
-        figure;
-        plot(temps, s_transp)
-        xlabel('temps (s)')
-        ylabel('Signal')
-        hold on
     end
 end
