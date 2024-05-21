@@ -11,13 +11,14 @@ Tb = 1/Rb; % période par bit
 N = 100; % nombre de bits total
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% 2 - Transmission avec transposition de fréquence
+%% 2 - Transmission avec transposition de fréquence (pbEquivalent = false)
+%% 3 - Chaîne passe-bas équivalente (pbEquivalent = true)
 n = 2;
 SNRB = 4;
-pbEquivalent = false;
+pbEquivalent = true;
 [~, s, s_transp, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
 
-%% 2 - 1) Signaux générés en quadrature de phase
+%% 1) Signaux générés en quadrature de phase
 figure;
 plot(0:Te:(nb_symb*Ns-1)*Te, real(s));
 hold on;
@@ -28,7 +29,7 @@ ylabel('Amplitude');
 legend('a_k', 'b_k');
 grid on;
 
-%% 2 - 2) Signal transmis sur fréquence porteuse
+%% 2) Signal transmis sur fréquence porteuse
 temps = 0:Te:(nb_symb*Ns-1)*Te;
 figure;
 plot(temps, s_transp);
@@ -36,7 +37,7 @@ xlabel('temps (s)');
 ylabel('Signal');
 hold on;
 
-%% 2 - 3) DSP du signal transmis sur fréquence porteuse
+%% 3) DSP du signal transmis sur fréquence porteuse
 [DSP, F] = pwelch(s_transp, [], [], [], Fe);
 figure;
 plot(F, 10*log10(DSP));
@@ -47,7 +48,7 @@ grid on;
 
 % 4) Explications
 
-%% 2 - 5) et 6) TEB en fonction du SNRB, comparaison à la théorie
+%% 5) et 6) TEB en fonction du SNRB, comparaison à la théorie
 eps = 1e-1; % précision du TEB de 10%
 snrb_dB = 0:1:6;
 
@@ -77,8 +78,7 @@ ylabel('TEB');
 xlabel('SNR (dB)');
 legend('TEB_{min}', 'TEB', 'Location', 'southwest');
 
-%% 3 - Chaîne passe-bas équivalente
-n = 2;
-SNRB = 4;
-pbEquivalent = true;
-[~, s, s_transp, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
+%% 4 - Comparaison des modulateurs DVS-S et 4-ASK
+
+
+
