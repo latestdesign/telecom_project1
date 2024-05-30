@@ -16,7 +16,8 @@ N = 100; % nombre de bits total
 n = 2;
 SNRB = 4;
 pbEquivalent = true;
-[~, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent);
+ASK = false;
+[~, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ASK);
 
 %% 1) Signaux générés en quadrature de phase
 figure;
@@ -86,7 +87,7 @@ for n=1:4
         TEB_min(i) = 2*((M-1)/(M*n)) * qfunc(sqrt((6*n)/(M^2-1) * snrb(i)));
         N = round(1/(TEB_min(i)*eps^2));
         bits = randi(M, 1, N)*2-M-1;
-        TEB(i) = chaine_transmission(n, snrb(i), N, Fe, fp, Rb, pbEquivalent);
+        TEB(i) = chaine_transmission(n, snrb(i), N, Fe, fp, Rb, pbEquivalent, ASK);
     end
     semilogy(snrb_dB, TEB_min, 'Color', [1 0 0 0.5]);
     hold on;
