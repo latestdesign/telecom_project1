@@ -21,11 +21,11 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
 
     % MAPPING
     bits_regroupes = reshape(bits, n, []);
-    entiers = bi2de(bits_regroupes.', 'left-msb');
-    if ASK 
-        symboles = pammod(entiers, M).';
+    entiers = bi2de(bits_regroupes.', 'left-msb'); % éventuellement mettre en Gray
+    if ASK
+        symboles = entiers * 2 - M + 1; % mapping entier vers M-ASK
     else
-        symboles = pskmod(entiers, M).'; % éventuellement mettre en Gray
+        symboles = pskmod(entiers, M).'; % mapping entier vers M-PSK
     end
     x = kron(symboles, [1 zeros(1, Ns-1)]);
 
@@ -69,7 +69,12 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
     s_sample = s_demod(n0:Ns:end);
 
     % DEMAPPING
-    s_demappe = pskdemod(s_sample, M);
+    if ASK
+        s_demappe = (s_sample - 1 + M) / 2;
+        % peut-être des reshape à faire Nico... uWu
+    else
+        s_demappe = pskdemod(s_sample, M);
+    end
     s_demappe = de2bi(s_demappe, 'left-msb').';
     s_demappe = s_demappe(:).';
 
