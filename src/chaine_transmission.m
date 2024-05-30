@@ -1,4 +1,4 @@
-function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ask)
+function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ASK)
     % - n: nombre de bits par symbole
     % - SNRB: rapport signal sur bruit par bit
     % - N: nombre de bits total transmis
@@ -22,9 +22,9 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
     % MAPPING
     bits_regroupes = reshape(bits, n, []);
     entiers = bi2de(bits_regroupes.', 'left-msb');
-    if ask 
+    if ASK 
         symboles = pammod(entiers, M).';
-    else 
+    else
         symboles = pskmod(entiers, M).'; % éventuellement mettre en Gray
     end
     x = kron(symboles, [1 zeros(1, Ns-1)]);
