@@ -33,7 +33,7 @@ grid on;
 %% 2-2) Signal transmis sur fréquence porteuse
 temps = 0:Te:(nb_symb*Ns-1)*Te;
 figure;
-plot(temps, s_transp);
+plot(temps, real(s_transp));
 xlabel('temps (s)');
 ylabel('Signal');
 hold on;
