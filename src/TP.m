@@ -75,7 +75,7 @@ grid on;
 eps = 1e-1; % précision du TEB de 10%
 snrb_dB = 0:1:6;
 func_chaine = @(n, SNRB, N) chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ASK);
-[TEB, TEB_min] = TEB_comp(eps, snrb_dB, func_chaine);
+TEB_comp(eps, snrb_dB, func_chaine);
 
 %% 4 - Comparaison des modulateurs DVB-S et 4-ASK
 n = 2;
