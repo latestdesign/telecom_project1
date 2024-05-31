@@ -1,0 +1,75 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=2cm,right=2cm]{geometry}
+\usepackage{times}
+\usepackage[numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% listings support
+\usepackage{listings}
+\usepackage{verbatim}
+\lstset{
+  language=Java,
+  extendedchars=true,
+  inputencoding=utf8,
+  basicstyle=\ttfamily,
+  literate=
+    {à}{{\`a}}1 {â}{{\^a}}1 {ç}{{\c{c}}}1 {é}{{\'e}}1 {è}{{\`e}}1
+    {ê}{{\^e}}1 {ë}{{\"e}}1 {î}{{\^i}}1 {ï}{{\"i}}1 {ô}{{\^o}}1
+    {û}{{\^u}}1 {ü}{{\"u}}1 {Ç}{{\c{C}}}1 {É}{{\'E}}1 {È}{{\`E}}1
+    {Ê}{{\^E}}1 {Ë}{{\"E}}1 {Î}{{\^I}}1 {Ï}{{\"I}}1 {Ô}{{\^O}}1
+    {Û}{{\^U}}1 {Ü}{{\"U}}1,
+}
+
+% to make nice graph figures
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows.meta}
+
+% formatting specifics
+\setlength{\parindent}{0pt} % sets default to \noindent
+% use \hspace{1em} for indentation
+\usepackage{multicol}
+
+% basic math package
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% bibliography
+\usepackage[numbib, nottoc]{tocbibind}
+\bibliographystyle{plainnat}
+\newcommand{\figref}[1]{(fig.\ref{#1}, p.\pageref{#1})}
+
+% for figures and images
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{graphbox}
+\usepackage{subfig} %use subcaption for better compatibility
+
+\title{Projet de Traitement de Signal et Télécommunications \\
+\Large Étude d’une chaine de transmission sur porteuse pour une transmission
+satellite ﬁxe}
+\author{Nicolas BAILLIET \and Paul LOUKA}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\clearpage
+\section{SECTION1}
+
+
+\clearpage
+\section{SECTION2}
+
+
+\clearpage
+\appendix
+\section{APPENDIX}
+
+
+\end{document}

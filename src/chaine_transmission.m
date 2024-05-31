@@ -8,7 +8,7 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
     if reste ~= 0
         N = N + n - reste;
     end
-    
+
     Te = 1/Fe; % période d'échantillonnage
     Rs = Rb/n; % débit symbole
     Ts = 1/Rs; % période symbole
@@ -23,7 +23,7 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
     bits_regroupes = reshape(bits, n, []);
     entiers = bi2de(bits_regroupes.', 'left-msb'); % éventuellement mettre en Gray
     if ASK
-        symboles = entiers * 2 - M + 1; % mapping entier vers M-ASK
+        symboles = pammod(entiers, M).'; % mapping entier vers M-ASK
     else
         symboles = pskmod(entiers, M).'; % mapping entier vers M-PSK
     end
@@ -70,8 +70,7 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
 
     % DEMAPPING
     if ASK
-        s_demappe = (s_sample - 1 + M) / 2;
-        % peut-être des reshape à faire Nico... uWu
+        s_demappe = pamdemod(s_sample, M);
     else
         s_demappe = pskdemod(s_sample, M);
     end
