@@ -1,4 +1,4 @@
-function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ASK)
+function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmission(n, SNRB, N, Fe, fp, Rb, pbEquivalent, ASK, beta)
     % - n: nombre de bits par symbole
     % - SNRB: rapport signal sur bruit par bit
     % - N: nombre de bits total transmis
@@ -30,7 +30,6 @@ function [TEB, s, s_transp, symboles, s_sample, nb_symb, Ns] = chaine_transmissi
     x = kron(symboles, [1 zeros(1, Ns-1)]);
 
     % FILTRE EMISSION
-    beta = 0.35;
     L = 8;
     h = rcosdesign(beta, L, Ns);
     s = filter(h, 1, x);
